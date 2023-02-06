@@ -32,15 +32,23 @@ toggleCompleted = evt => {
       return item;
     })}))
     .catch(err => console.error(err))
-  
-
 }
+addItem = str => {
+ axios 
+   .post(URL, {name: str})
+   .then((res) => this.setState({...this.state, todos:[...this.state.todos, res.data.data]}))
+   .catch(err => console.error(err))
+} 
 
   render() {
     
     return <><h2>To Do:</h2>
-    <TodoList todos={this.state.todos} toggleCompleted={this.toggleCompleted}/>
-    <Form />
+    <TodoList 
+      todos={this.state.todos} 
+      toggleCompleted={this.toggleCompleted}/>
+    <Form 
+      addItem={this.addItem}  
+    />
     </>
   }
 }
