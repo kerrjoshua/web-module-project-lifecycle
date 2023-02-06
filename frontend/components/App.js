@@ -9,7 +9,9 @@ export default class App extends React.Component {
 constructor(){
   super();
   this.state = {
-    todos: []
+    todos: [],
+    displayCompleted: true,
+    error: ''
 
   }
 
@@ -37,17 +39,28 @@ addItem = str => {
  axios 
    .post(URL, {name: str})
    .then((res) => this.setState({...this.state, todos:[...this.state.todos, res.data.data]}))
-   .catch(err => console.error(err))
+   .catch(err => this.setState({...this.state, error: "Your task needs a name."}))
 } 
+
+toggleDisplayCompleted = () => {
+  this.setState({...this.state, displayCompleted: !this.state.displayCompleted})
+}
+  
 
   render() {
     
     return <><h2>To Do:</h2>
     <TodoList 
       todos={this.state.todos} 
-      toggleCompleted={this.toggleCompleted}/>
+      toggleCompleted={this.toggleCompleted}
+      displayCompleted={this.state.displayCompleted}
+    />
+    <div>{this.state.error}</div>
     <Form 
-      addItem={this.addItem}  
+      addItem={this.addItem} 
+      clear={this.clearCompleted} 
+      displayCompleted={this.state.displayCompleted}
+      toggleDisplayCompleted={this.toggleDisplayCompleted}
     />
     </>
   }

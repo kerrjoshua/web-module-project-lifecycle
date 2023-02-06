@@ -22,10 +22,10 @@ export default class Form extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <input type='text' placeholder='New item...' onChange={e => this.handleChange(e)} value={this.state.inputText}></input>
         <button type='submit'>Add item</button>
-        <div><button>Clear Completed</button></div>
         
         
       </form>
+        <div><button onClick={this.props.toggleDisplayCompleted}>{this.props.displayCompleted ? 'Hide' : 'Show'} Completed</button></div>
       </div>
   }
 }
